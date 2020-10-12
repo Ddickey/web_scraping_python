@@ -1,9 +1,5 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Oct 12 17:25:59 2020
-
-@author: Jerimiah
-"""
 
 import requests
 from bs4 import BeautifulSoup
@@ -11,11 +7,11 @@ import pandas as pd
 import time
 
 
-#r = requests.get('https://www.amazon.com/Best-Sellers/zgbs')
-
 def review_count_scrape():
     url = 'https://www.amazon.com/Best-Sellers/zgbs'
-    headers = ({'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:53.0) Gecko/20100101 Firefox/53.0'})
+    headers = ({'User-Agent':
+            'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+            'Accept-Language': 'en-US, en;q=0.5'})
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, 'lxml')
     print(r.status_code)
@@ -23,9 +19,10 @@ def review_count_scrape():
     df = pd.DataFrame(product_total_review)
     print(df)
     
-    #adding a timer 
+    #add timer
     time.sleep(60)
     
-end_timer = time.time() + 60 * 2 
+
+end_timer = time.time() + 60 * 2
 while time.time() < end_timer:
     review_count_scrape()
